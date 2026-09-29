@@ -11,7 +11,7 @@ export const applyFilters = () => {
   const query = state.searchTerm.toLowerCase().trim();
   const maxRent = state.maxRent;
 
-  state.filtered = listings.filter((listing) => {
+  state.filtered = state.listings.filter((listing) => {
     const matchesQuery =
       query === "" ||
       listing.name.toLowerCase().includes(query) ||

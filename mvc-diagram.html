@@ -5,57 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BoardingEase MVC Map</title>
     <style>
+      /* ---------- Tokens (shadcn / zinc), same as study-guide.html ---------- */
       :root {
-        --ink: #16232b;
-        --ink-soft: #4a5b63;
-        --paper: #f7f5f0;
-        --surface: #ffffff;
-        --line: #e0dcd3;
-        --green: #1e7a5f;
-        --green-soft: #e8f2ee;
-        --amber: #a06a12;
-        --amber-soft: #f8efdd;
-        --red: #b3261e;
-        --red-soft: #fbebeb;
-        --blue: #2b5fa8;
-        --blue-soft: #e9f0fa;
-        --radius: 12px;
-        --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        --background: #ffffff;
+        --foreground: #09090b;
+        --muted: #f4f4f5;
+        --muted-foreground: #71717a;
+        --border: #e4e4e7;
+        --card: #ffffff;
+        --primary: #18181b;
+        --primary-foreground: #fafafa;
+        --ring: #a1a1aa;
+        --green: #16a34a;
+        --blue: #2563eb;
+        --amber: #d97706;
+        --red: #dc2626;
+        --header-bg: rgba(255, 255, 255, 0.8);
+        --shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --radius: 8px;
+        --font: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       }
       @media (prefers-color-scheme: dark) {
         :root:not([data-theme="light"]) {
-          --ink: #e7ecee;
-          --ink-soft: #a3b1b7;
-          --paper: #12191d;
-          --surface: #1b2429;
-          --line: #2e3b42;
-          --green: #5cc59f;
-          --green-soft: #173229;
-          --amber: #e4b25c;
-          --amber-soft: #33291a;
-          --red: #f08a82;
-          --red-soft: #3a1f1d;
-          --blue: #86b1ec;
-          --blue-soft: #1a2638;
+          --background: #09090b;
+          --foreground: #fafafa;
+          --muted: #18181b;
+          --muted-foreground: #a1a1aa;
+          --border: #27272a;
+          --card: #09090b;
+          --primary: #fafafa;
+          --primary-foreground: #18181b;
+          --ring: #52525b;
+          --green: #4ade80;
+          --blue: #60a5fa;
+          --amber: #fbbf24;
+          --red: #f87171;
+          --header-bg: rgba(9, 9, 11, 0.75);
+          --shadow: none;
         }
       }
       :root[data-theme="dark"] {
-        --ink: #e7ecee;
-        --ink-soft: #a3b1b7;
-        --paper: #12191d;
-        --surface: #1b2429;
-        --line: #2e3b42;
-        --green: #5cc59f;
-        --green-soft: #173229;
-        --amber: #e4b25c;
-        --amber-soft: #33291a;
-        --red: #f08a82;
-        --red-soft: #3a1f1d;
-        --blue: #86b1ec;
-        --blue-soft: #1a2638;
+        --background: #09090b;
+        --foreground: #fafafa;
+        --muted: #18181b;
+        --muted-foreground: #a1a1aa;
+        --border: #27272a;
+        --card: #09090b;
+        --primary: #fafafa;
+        --primary-foreground: #18181b;
+        --ring: #52525b;
+        --green: #4ade80;
+        --blue: #60a5fa;
+        --amber: #fbbf24;
+        --red: #f87171;
+        --header-bg: rgba(9, 9, 11, 0.75);
+        --shadow: none;
       }
 
+      /* ---------- Base ---------- */
       *,
       *::before,
       *::after {
@@ -64,102 +72,212 @@
       body {
         margin: 0;
         font-family: var(--font);
-        font-size: 17px;
-        line-height: 1.45;
-        color: var(--ink);
-        background: var(--paper);
+        font-size: 15px;
+        line-height: 1.5;
+        color: var(--foreground);
+        background: var(--background);
+        -webkit-font-smoothing: antialiased;
       }
       code,
       .mono {
         font-family: var(--mono);
-        font-size: 0.9em;
+        font-size: 0.85em;
+        font-weight: 500;
       }
-
-      .wrap {
-        max-width: 1320px;
-        margin: 0 auto;
-        padding: 20px 16px 40px;
+      code {
+        background: var(--muted);
+        border-radius: 4px;
+        padding: 0.1em 0.35em;
       }
-      header {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px 20px;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 14px;
-      }
-      h1 {
-        margin: 0;
-        font-size: 1.5rem;
-        letter-spacing: -0.01em;
-      }
-      h1 span {
-        color: var(--green);
-      }
-      .sub {
-        margin: 2px 0 0;
-        color: var(--ink-soft);
-        font-size: 0.95rem;
-      }
-      .theme {
-        border: 1px solid var(--line);
-        background: var(--surface);
-        color: var(--ink);
-        border-radius: 999px;
-        padding: 6px 14px;
-        font: inherit;
-        font-size: 0.85rem;
-        cursor: pointer;
-      }
-
-      /* Tabs */
-      .tabs {
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-        margin-bottom: 16px;
-      }
-      .tab {
-        flex: 1 1 200px;
-        text-align: left;
-        border: 1px solid var(--line);
-        background: var(--surface);
-        color: var(--ink);
-        border-radius: var(--radius);
-        padding: 10px 14px;
-        font: inherit;
-        cursor: pointer;
-      }
-      .tab small {
-        display: block;
-        color: var(--ink-soft);
-        font-size: 0.8rem;
-      }
-      .tab strong {
-        font-size: 1.02rem;
-      }
-      .tab[aria-selected="true"] {
-        border-color: var(--green);
-        box-shadow: inset 0 0 0 1px var(--green);
-        background: var(--green-soft);
-      }
-      .tab:focus-visible,
-      .theme:focus-visible {
-        outline: 3px solid var(--blue);
+      :focus-visible {
+        outline: 2px solid var(--ring);
         outline-offset: 2px;
       }
 
-      /* Lanes */
+      /* ---------- Header ---------- */
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        height: 56px;
+        border-bottom: 1px solid var(--border);
+        background: var(--header-bg);
+        backdrop-filter: saturate(180%) blur(12px);
+        -webkit-backdrop-filter: saturate(180%) blur(12px);
+      }
+      .top__inner {
+        max-width: 1360px;
+        height: 100%;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--foreground);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .logo {
+        display: grid;
+        place-items: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        font-size: 13px;
+        font-weight: 800;
+      }
+      .brand__sep {
+        color: var(--border);
+        font-weight: 300;
+        font-size: 20px;
+      }
+      .brand__page {
+        color: var(--muted-foreground);
+        font-weight: 500;
+      }
+      .top__actions {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: 32px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--background);
+        color: var(--foreground);
+        font: inherit;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: var(--shadow);
+      }
+      .btn:hover {
+        background: var(--muted);
+      }
+      .btn--primary {
+        background: var(--primary);
+        color: var(--primary-foreground);
+        border-color: var(--primary);
+      }
+      .btn--primary:hover {
+        background: var(--primary);
+        opacity: 0.9;
+      }
+      .btn--icon {
+        width: 32px;
+        padding: 0;
+        justify-content: center;
+      }
+
+      /* ---------- Page ---------- */
+      .wrap {
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 32px 20px 56px;
+      }
+      .hero {
+        margin-bottom: 22px;
+      }
+      .eyebrow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        height: 22px;
+        padding: 0 8px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      h1 {
+        margin: 0;
+        font-size: 2.1rem;
+        line-height: 1.15;
+        font-weight: 700;
+        letter-spacing: -0.035em;
+      }
+      .sub {
+        margin: 8px 0 0;
+        color: var(--muted-foreground);
+        font-size: 1.02rem;
+      }
+
+      /* ---------- Tabs (shadcn TabsList) ---------- */
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 4px;
+        padding: 4px;
+        margin-bottom: 20px;
+        background: var(--muted);
+        border-radius: 10px;
+      }
+      .tab {
+        text-align: left;
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--muted-foreground);
+        border-radius: 7px;
+        padding: 8px 12px;
+        font: inherit;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+      }
+      .tab:hover {
+        color: var(--foreground);
+      }
+      .tab small {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 500;
+      }
+      .tab strong {
+        display: block;
+        font-size: 13.5px;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .tab[aria-selected="true"] {
+        background: var(--background);
+        color: var(--foreground);
+        border-color: var(--border);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+
+      /* ---------- Lanes ---------- */
       .board {
         display: grid;
         grid-template-columns: 1fr 124px 1.15fr 124px 1fr;
         align-items: stretch;
       }
       .lane {
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 12px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 14px;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -170,18 +288,36 @@
         align-items: baseline;
         justify-content: space-between;
         gap: 8px;
-        padding: 2px 4px 6px;
-        border-bottom: 1px solid var(--line);
+        padding: 0 2px 10px;
+        border-bottom: 1px solid var(--border);
       }
       .lane__title {
-        font-weight: 800;
-        font-size: 1.15rem;
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: -0.01em;
+      }
+      .lane__title::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--muted-foreground);
+      }
+      .board > .lane:nth-child(1) .lane__title::before {
+        background: var(--blue);
+      }
+      .board > .lane:nth-child(3) .lane__title::before {
+        background: var(--amber);
+      }
+      .board > .lane:nth-child(5) .lane__title::before {
+        background: var(--green);
       }
       .lane__role {
-        color: var(--ink-soft);
-        font-size: 0.82rem;
+        color: var(--muted-foreground);
+        font-size: 12px;
         text-align: right;
       }
 
@@ -189,16 +325,16 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 18px;
-        padding: 0 6px;
+        gap: 22px;
+        padding: 0 8px;
       }
       .arrow {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2px;
-        font-size: 0.72rem;
-        color: var(--ink-soft);
+        gap: 4px;
+        font-size: 11px;
+        color: var(--ring);
         text-align: center;
       }
       .arrow svg {
@@ -209,14 +345,14 @@
       .arrow svg line,
       .arrow svg path {
         stroke: currentColor;
-        stroke-width: 2;
+        stroke-width: 1.5;
         fill: none;
       }
       .arrow b {
         font-family: var(--mono);
-        font-weight: 600;
-        color: var(--ink);
-        font-size: 0.74rem;
+        font-weight: 500;
+        color: var(--muted-foreground);
+        font-size: 11.5px;
         overflow-wrap: anywhere;
       }
       .arrow .num {
@@ -225,48 +361,51 @@
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        background: var(--ink);
-        color: var(--paper);
-        font-weight: 700;
-        font-size: 0.72rem;
+        background: var(--muted);
+        border: 1px solid var(--border);
+        color: var(--foreground);
+        font-family: var(--mono);
+        font-weight: 600;
+        font-size: 11px;
       }
 
-      /* File cards */
+      /* ---------- File cards ---------- */
       .file {
-        border: 2px solid var(--green);
-        border-radius: 10px;
-        background: var(--surface);
-        padding: 8px 10px 10px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--card);
+        padding: 10px 12px 12px;
         position: relative;
       }
       .file--misplaced {
-        border-color: var(--red);
-        background: var(--red-soft);
+        border-color: color-mix(in srgb, var(--red) 45%, var(--border));
+        background: color-mix(in srgb, var(--red) 5%, var(--card));
       }
       .file--next {
-        border: 2px dashed var(--amber);
-        background: var(--amber-soft);
+        border-style: dashed;
+        border-color: color-mix(in srgb, var(--amber) 55%, var(--border));
+        background: color-mix(in srgb, var(--amber) 5%, var(--card));
       }
       .file--new {
-        border-color: var(--blue);
-        background: var(--blue-soft);
+        border-color: color-mix(in srgb, var(--blue) 50%, var(--border));
+        background: color-mix(in srgb, var(--blue) 5%, var(--card));
       }
       .file__name {
         font-family: var(--mono);
-        font-weight: 700;
-        font-size: 0.98rem;
+        font-weight: 600;
+        font-size: 13.5px;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         gap: 6px;
       }
       .file__note {
-        color: var(--ink-soft);
-        font-size: 0.8rem;
-        margin: 2px 0 4px;
+        color: var(--muted-foreground);
+        font-size: 12.5px;
+        margin: 4px 0;
       }
       .file ul {
-        margin: 4px 0 0;
+        margin: 8px 0 0;
         padding: 0;
         list-style: none;
         display: flex;
@@ -275,65 +414,78 @@
       }
       .file li {
         font-family: var(--mono);
-        font-size: 0.78rem;
-        padding: 2px 7px;
-        border-radius: 6px;
-        background: var(--paper);
-        border: 1px solid var(--line);
+        font-size: 11.5px;
+        padding: 1px 7px;
+        border-radius: 5px;
+        background: var(--muted);
+        color: var(--foreground);
       }
       .file .group {
-        margin-top: 8px;
-        padding: 6px 8px 8px;
-        border-radius: 8px;
+        margin-top: 10px;
+        padding: 8px 10px 10px;
+        border-radius: 7px;
       }
       .group__label {
-        font-size: 0.74rem;
-        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.05em;
       }
       .group--ok {
-        border: 1.5px solid var(--green);
+        border: 1px solid color-mix(in srgb, var(--green) 40%, var(--border));
       }
       .group--ok .group__label {
         color: var(--green);
       }
       .group--bad {
-        border: 1.5px solid var(--red);
-        background: var(--red-soft);
+        border: 1px solid color-mix(in srgb, var(--red) 45%, var(--border));
+        background: color-mix(in srgb, var(--red) 6%, var(--card));
       }
       .group--bad .group__label {
         color: var(--red);
       }
       .group--next {
-        border: 1.5px dashed var(--amber);
-        background: var(--amber-soft);
+        border: 1px dashed color-mix(in srgb, var(--amber) 55%, var(--border));
+        background: color-mix(in srgb, var(--amber) 6%, var(--card));
       }
       .group--next .group__label {
         color: var(--amber);
       }
 
       .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        height: 18px;
+        padding: 0 6px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
         font-family: var(--font);
-        font-size: 0.66rem;
-        font-weight: 800;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        padding: 1px 7px;
-        border-radius: 999px;
-        color: var(--surface);
+        font-size: 10.5px;
+        font-weight: 500;
+        color: var(--foreground);
+        background: var(--background);
+        text-transform: none;
+        letter-spacing: 0;
       }
-      .badge--new {
+      .badge::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--muted-foreground);
+      }
+      .badge--new::before {
         background: var(--blue);
       }
-      .badge--bad {
+      .badge--bad::before {
         background: var(--red);
       }
-      .badge--next {
+      .badge--next::before {
         background: var(--amber);
-      }
-      .badge--same {
-        background: var(--ink-soft);
       }
 
       .extends {
@@ -342,9 +494,9 @@
         gap: 8px;
         margin: -4px 0 -4px 22px;
         color: var(--blue);
-        font-size: 0.78rem;
+        font-size: 11.5px;
         font-family: var(--mono);
-        font-weight: 600;
+        font-weight: 500;
       }
       .extends svg {
         width: 14px;
@@ -352,37 +504,40 @@
       }
       .extends path {
         stroke: currentColor;
-        stroke-width: 2;
-        fill: var(--surface);
+        stroke-width: 1.5;
+        fill: var(--card);
       }
       .children {
         display: flex;
         flex-direction: column;
         gap: 8px;
-        padding-left: 18px;
-        border-left: 2px solid var(--blue);
+        padding-left: 16px;
+        border-left: 1px solid color-mix(in srgb, var(--blue) 50%, var(--border));
         margin-left: 8px;
       }
 
-      /* Flow */
+      /* ---------- Flow ---------- */
       .flow {
         margin-top: 16px;
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 14px 16px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 16px 18px;
       }
       .flow h2 {
-        margin: 0 0 10px;
-        font-size: 1rem;
+        margin: 0 0 12px;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
       }
       .flow h2 span {
-        color: var(--ink-soft);
-        font-weight: 500;
+        color: var(--muted-foreground);
+        font-weight: 400;
       }
       .steps {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 10px;
         margin: 0;
         padding: 0;
@@ -392,39 +547,45 @@
       .steps li {
         counter-increment: step;
         position: relative;
-        padding: 10px 12px 10px 44px;
-        border-radius: 10px;
-        background: var(--paper);
-        border: 1px solid var(--line);
-        font-size: 0.9rem;
+        padding: 12px 12px 12px 46px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        font-size: 13.5px;
       }
       .steps li::before {
         content: counter(step);
         position: absolute;
-        left: 10px;
-        top: 10px;
+        left: 12px;
+        top: 12px;
         width: 24px;
         height: 24px;
         border-radius: 50%;
         display: grid;
         place-items: center;
-        background: var(--ink);
-        color: var(--paper);
-        font-weight: 700;
-        font-size: 0.8rem;
+        background: var(--muted);
+        border: 1px solid var(--border);
+        font-family: var(--mono);
+        font-weight: 600;
+        font-size: 11.5px;
+      }
+      .steps code {
+        overflow-wrap: anywhere;
       }
       .steps li.bad {
-        border-color: var(--red);
-        background: var(--red-soft);
+        border-color: color-mix(in srgb, var(--red) 45%, var(--border));
+        background: color-mix(in srgb, var(--red) 5%, var(--card));
       }
       .steps b {
         display: block;
-        font-size: 0.8rem;
+        margin-bottom: 2px;
+        font-size: 11px;
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: var(--ink-soft);
+        letter-spacing: 0.05em;
+        color: var(--muted-foreground);
       }
 
+      /* ---------- Bottom ---------- */
       .bottom {
         display: grid;
         grid-template-columns: 1.4fr 1fr;
@@ -432,73 +593,87 @@
         margin-top: 16px;
       }
       .card {
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 12px 16px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 16px 18px;
       }
       .card h2 {
-        margin: 0 0 6px;
-        font-size: 1rem;
+        margin: 0 0 8px;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
       }
       .card ul {
         margin: 0;
         padding-left: 1.1rem;
-        font-size: 0.92rem;
+        font-size: 14px;
       }
       .card li + li {
-        margin-top: 3px;
+        margin-top: 4px;
+      }
+      .card li::marker {
+        color: var(--muted-foreground);
       }
       .legend {
         display: flex;
         flex-wrap: wrap;
         gap: 8px 16px;
-        font-size: 0.86rem;
+        font-size: 13.5px;
       }
       .swatch {
         display: inline-block;
-        width: 26px;
-        height: 16px;
-        border-radius: 5px;
-        vertical-align: -3px;
+        width: 24px;
+        height: 14px;
+        border-radius: 4px;
+        vertical-align: -2px;
         margin-right: 6px;
+        border: 1px solid var(--border);
       }
       .sw-done {
-        border: 2px solid var(--green);
+        background: var(--card);
       }
       .sw-new {
-        border: 2px solid var(--blue);
-        background: var(--blue-soft);
+        border-color: color-mix(in srgb, var(--blue) 50%, var(--border));
+        background: color-mix(in srgb, var(--blue) 10%, var(--card));
       }
       .sw-bad {
-        border: 2px solid var(--red);
-        background: var(--red-soft);
+        border-color: color-mix(in srgb, var(--red) 45%, var(--border));
+        background: color-mix(in srgb, var(--red) 10%, var(--card));
       }
       .sw-next {
-        border: 2px dashed var(--amber);
-        background: var(--amber-soft);
+        border-style: dashed;
+        border-color: color-mix(in srgb, var(--amber) 55%, var(--border));
+        background: color-mix(in srgb, var(--amber) 10%, var(--card));
       }
       .hint {
-        margin-top: 10px;
-        color: var(--ink-soft);
-        font-size: 0.8rem;
+        margin: 12px 0 0;
+        color: var(--muted-foreground);
+        font-size: 12.5px;
       }
       kbd {
-        font-family: var(--mono);
-        font-size: 0.78rem;
-        border: 1px solid var(--line);
-        border-bottom-width: 2px;
-        border-radius: 5px;
+        display: inline-grid;
+        place-items: center;
+        min-width: 20px;
+        height: 20px;
         padding: 0 5px;
-        background: var(--surface);
+        font-family: var(--mono);
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--foreground);
+        background: var(--muted);
+        border: 1px solid var(--border);
+        border-radius: 4px;
       }
 
-      /* Overview */
+      /* ---------- Overview ---------- */
       .ov-wrap {
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 12px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 16px;
       }
       .ov {
         display: block;
@@ -507,87 +682,89 @@
       }
       .ov-title {
         font-family: var(--font);
-        font-size: 34px;
-        font-weight: 800;
-        fill: var(--ink);
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        fill: var(--foreground);
       }
       .ov-frame {
-        fill: var(--surface);
-        stroke: var(--ink);
-        stroke-width: 3;
+        fill: var(--card);
+        stroke: var(--foreground);
+        stroke-width: 2;
       }
       .ov-screen {
-        fill: var(--paper);
-        stroke: var(--line);
+        fill: var(--muted);
+        stroke: var(--border);
       }
       .ov-stand {
-        fill: var(--ink);
+        fill: var(--foreground);
       }
       .ov-text {
         font-family: var(--font);
-        font-size: 17px;
-        font-weight: 600;
-        fill: var(--ink);
+        font-size: 16.5px;
+        font-weight: 500;
+        fill: var(--foreground);
       }
       .ov-file {
         font-family: var(--mono);
-        font-size: 16px;
-        font-weight: 700;
-        fill: var(--green);
+        font-size: 15px;
+        font-weight: 600;
+        fill: var(--blue);
       }
       .ov-code,
       .ov-caption {
         font-family: var(--mono);
-        font-size: 13px;
-        fill: var(--ink-soft);
+        font-size: 12.5px;
+        fill: var(--muted-foreground);
       }
       .ov-label {
         font-family: var(--font);
-        font-size: 16px;
-        font-weight: 700;
-        fill: var(--ink);
+        font-size: 15px;
+        font-weight: 600;
+        fill: var(--foreground);
       }
       .ov-arrow {
-        stroke: var(--ink);
-        stroke-width: 3;
+        stroke: var(--muted-foreground);
+        stroke-width: 2;
         fill: none;
       }
       .ov-head {
-        fill: var(--ink);
+        fill: var(--muted-foreground);
       }
       .ov-db {
-        fill: var(--blue-soft);
+        fill: color-mix(in srgb, var(--blue) 8%, var(--card));
         stroke: var(--blue);
-        stroke-width: 2.5;
+        stroke-width: 1.5;
       }
       .ov-dot {
         fill: var(--blue);
       }
       .ov-dash {
         stroke: var(--blue);
-        stroke-width: 3;
+        stroke-width: 2.5;
         stroke-dasharray: 14 8;
       }
       .ov-ui {
-        fill: var(--line);
+        fill: var(--border);
       }
       .ov-ui--accent {
-        fill: var(--green-soft);
+        fill: color-mix(in srgb, var(--green) 15%, var(--card));
         stroke: var(--green);
       }
       .ov-note {
         margin-top: 16px;
         padding: 12px 16px;
-        border-left: 4px solid var(--amber);
-        border-radius: 8px;
-        background: var(--amber-soft);
-        font-size: 0.95rem;
+        border: 1px solid color-mix(in srgb, var(--amber) 35%, var(--border));
+        border-radius: var(--radius);
+        background: color-mix(in srgb, var(--amber) 6%, var(--background));
+        font-size: 14px;
       }
 
       .panel[hidden] {
         display: none;
       }
 
+      /* ---------- Responsive ---------- */
       @media (max-width: 1100px) {
         .board {
           grid-template-columns: 1fr;
@@ -604,74 +781,169 @@
           margin: 10px 0;
         }
         .steps {
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
         .bottom {
           grid-template-columns: 1fr;
         }
       }
+      @media (max-width: 760px) {
+        .tabs {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
       @media (max-width: 560px) {
         body {
-          font-size: 15px;
+          font-size: 14.5px;
+        }
+        .top__inner,
+        .wrap {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+        .brand__sep,
+        .brand__page {
+          display: none;
+        }
+        h1 {
+          font-size: 1.75rem;
         }
         .steps {
-          grid-template-columns: 1fr;
+          grid-template-columns: minmax(0, 1fr);
         }
       }
     </style>
   </head>
   <body>
-    <div class="wrap">
-      <header>
-        <div>
-          <h1>Boarding<span>Ease</span>: MVC map</h1>
-          <p class="sub">
-            Where each piece of code lives: where we are now, and where we're
-            going.
-          </p>
+    <header class="top">
+      <div class="top__inner">
+        <a class="brand" href="study-guide.html">
+          <span class="logo">B</span>
+          <span>BoardingEase</span>
+          <span class="brand__sep">/</span>
+          <span class="brand__page">MVC Map</span>
+        </a>
+        <div class="top__actions">
+          <a class="btn btn--primary" href="study-guide.html">Study guide ↗</a>
+          <button class="btn btn--icon" type="button" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">◐</button>
         </div>
-        <button class="theme" type="button" id="theme-toggle">
-          Toggle theme
-        </button>
-      </header>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div class="hero">
+        <div class="eyebrow"><span class="pill">ITPFE 1</span><span class="pill">Week 5</span></div>
+        <h1>MVC map</h1>
+        <p class="sub">Where each piece of code lives: where we are now, and where we're going.</p>
+      </div>
 
       <div class="tabs" role="tablist" aria-label="Stages">
-        <button class="tab" role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true">
+        <button
+          class="tab"
+          role="tab"
+          id="tab-0"
+          aria-controls="panel-0"
+          aria-selected="true"
+        >
           <small>Overview</small><strong>What is MVC?</strong>
         </button>
-        <button class="tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false" tabindex="-1">
+        <button
+          class="tab"
+          role="tab"
+          id="tab-1"
+          aria-controls="panel-1"
+          aria-selected="false"
+          tabindex="-1"
+        >
           <small>Step 1 · Week 5</small><strong>Where we are</strong>
         </button>
-        <button class="tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1">
+        <button
+          class="tab"
+          role="tab"
+          id="tab-2"
+          aria-controls="panel-2"
+          aria-selected="false"
+          tabindex="-1"
+        >
           <small>Step 2 · Today</small><strong>View.js + ResultsView.js</strong>
         </button>
-        <button class="tab" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1">
-          <small>Step 3 · Next lecture</small><strong>DetailView.js + state in model</strong>
+        <button
+          class="tab"
+          role="tab"
+          id="tab-3"
+          aria-controls="panel-3"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          <small>Step 3 · Next lecture</small
+          ><strong>DetailView.js + state in model</strong>
         </button>
       </div>
 
       <!-- ============ PANEL 0: OVERVIEW ============ -->
-      <section class="panel" id="panel-0" role="tabpanel" aria-labelledby="tab-0">
+      <section
+        class="panel"
+        id="panel-0"
+        role="tabpanel"
+        aria-labelledby="tab-0"
+      >
         <div class="ov-wrap">
-          <svg class="ov" viewBox="0 0 1100 600" role="img" aria-labelledby="ov-title ov-desc">
+          <svg
+            class="ov"
+            viewBox="0 0 1100 600"
+            role="img"
+            aria-labelledby="ov-title ov-desc"
+          >
             <title id="ov-title">MVC overview for BoardingEase</title>
             <desc id="ov-desc">
-              The Model (model.js) reads from data.js. The Controller (app.js) sits between the
-              Model and the View (SearchView.js, ResultsView.js). The student sends a request to the
-              controller and gets back an updated page.
+              The Model (model.js) reads from data.js. The Controller (app.js)
+              sits between the Model and the View (SearchView.js,
+              ResultsView.js). The student sends a request to the controller and
+              gets back an updated page.
             </desc>
             <defs>
-              <marker id="ov-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <marker
+                id="ov-ah"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="5"
+                markerHeight="5"
+                orient="auto-start-reverse"
+              >
                 <path d="M0,0 L10,5 L0,10 z" class="ov-head" />
               </marker>
             </defs>
 
             <!-- MODEL -->
-            <text class="ov-title" x="190" y="44" text-anchor="middle">Model</text>
-            <rect class="ov-frame" x="40" y="60" width="300" height="180" rx="12" />
-            <rect class="ov-screen" x="52" y="72" width="276" height="156" rx="6" />
+            <text class="ov-title" x="190" y="44" text-anchor="middle">
+              Model
+            </text>
+            <rect
+              class="ov-frame"
+              x="40"
+              y="60"
+              width="300"
+              height="180"
+              rx="12"
+            />
+            <rect
+              class="ov-screen"
+              x="52"
+              y="72"
+              width="276"
+              height="156"
+              rx="6"
+            />
             <rect class="ov-stand" x="176" y="240" width="28" height="16" />
-            <rect class="ov-stand" x="140" y="256" width="100" height="8" rx="4" />
+            <rect
+              class="ov-stand"
+              x="140"
+              y="256"
+              width="100"
+              height="8"
+              rx="4"
+            />
             <text class="ov-text" x="72" y="104">• Handles data + rules</text>
             <text class="ov-text" x="72" y="132">• Holds the app's state</text>
             <text class="ov-file" x="72" y="178">model.js</text>
@@ -679,85 +951,248 @@
 
             <!-- DATABASE -->
             <rect class="ov-db" x="490" y="64" width="120" height="34" rx="6" />
-            <rect class="ov-db" x="490" y="104" width="120" height="34" rx="6" />
-            <rect class="ov-db" x="490" y="144" width="120" height="34" rx="6" />
+            <rect
+              class="ov-db"
+              x="490"
+              y="104"
+              width="120"
+              height="34"
+              rx="6"
+            />
+            <rect
+              class="ov-db"
+              x="490"
+              y="144"
+              width="120"
+              height="34"
+              rx="6"
+            />
             <circle class="ov-dot" cx="508" cy="81" r="5" />
             <circle class="ov-dot" cx="508" cy="121" r="5" />
             <circle class="ov-dot" cx="508" cy="161" r="5" />
             <line class="ov-dash" x1="528" y1="81" x2="594" y2="81" />
             <line class="ov-dash" x1="528" y1="121" x2="594" y2="121" />
             <line class="ov-dash" x1="528" y1="161" x2="594" y2="161" />
-            <text class="ov-label" x="550" y="204" text-anchor="middle">Database</text>
-            <text class="ov-caption" x="550" y="224" text-anchor="middle">data.js · listings[ ]</text>
-            <line class="ov-arrow" x1="350" y1="121" x2="478" y2="121" marker-start="url(#ov-ah)" marker-end="url(#ov-ah)" />
+            <text class="ov-label" x="550" y="204" text-anchor="middle">
+              Database
+            </text>
+            <text class="ov-caption" x="550" y="224" text-anchor="middle">
+              data.js · listings[ ]
+            </text>
+            <line
+              class="ov-arrow"
+              x1="350"
+              y1="121"
+              x2="478"
+              y2="121"
+              marker-start="url(#ov-ah)"
+              marker-end="url(#ov-ah)"
+            />
 
             <!-- VIEW -->
-            <text class="ov-title" x="910" y="44" text-anchor="middle">View</text>
-            <rect class="ov-frame" x="760" y="60" width="300" height="180" rx="12" />
-            <rect class="ov-screen" x="772" y="72" width="276" height="156" rx="6" />
+            <text class="ov-title" x="910" y="44" text-anchor="middle">
+              View
+            </text>
+            <rect
+              class="ov-frame"
+              x="760"
+              y="60"
+              width="300"
+              height="180"
+              rx="12"
+            />
+            <rect
+              class="ov-screen"
+              x="772"
+              y="72"
+              width="276"
+              height="156"
+              rx="6"
+            />
             <rect class="ov-stand" x="896" y="240" width="28" height="16" />
-            <rect class="ov-stand" x="860" y="256" width="100" height="8" rx="4" />
+            <rect
+              class="ov-stand"
+              x="860"
+              y="256"
+              width="100"
+              height="8"
+              rx="4"
+            />
             <text class="ov-text" x="792" y="104">• Handles presentation</text>
-            <text class="ov-text" x="792" y="132">• Renders HTML dynamically</text>
+            <text class="ov-text" x="792" y="132">
+              • Renders HTML dynamically
+            </text>
             <text class="ov-file" x="792" y="170">SearchView.js</text>
             <text class="ov-file" x="792" y="194">ResultsView.js</text>
             <text class="ov-code" x="792" y="216">(extends View.js)</text>
 
             <!-- CONTROLLER -->
-            <rect class="ov-frame" x="400" y="330" width="300" height="170" rx="12" />
-            <rect class="ov-screen" x="412" y="342" width="276" height="146" rx="6" />
+            <rect
+              class="ov-frame"
+              x="400"
+              y="330"
+              width="300"
+              height="170"
+              rx="12"
+            />
+            <rect
+              class="ov-screen"
+              x="412"
+              y="342"
+              width="276"
+              height="146"
+              rx="6"
+            />
             <rect class="ov-stand" x="536" y="500" width="28" height="14" />
-            <rect class="ov-stand" x="500" y="514" width="100" height="8" rx="4" />
+            <rect
+              class="ov-stand"
+              x="500"
+              y="514"
+              width="100"
+              height="8"
+              rx="4"
+            />
             <text class="ov-text" x="432" y="374">• Handles the flow</text>
-            <text class="ov-text" x="432" y="402">• No data logic, no HTML</text>
+            <text class="ov-text" x="432" y="402">
+              • No data logic, no HTML
+            </text>
             <text class="ov-file" x="432" y="444">app.js</text>
             <text class="ov-code" x="432" y="470">controllers + init()</text>
-            <text class="ov-title" x="550" y="566" text-anchor="middle">Controller</text>
+            <text class="ov-title" x="550" y="566" text-anchor="middle">
+              Controller
+            </text>
 
             <!-- END USER -->
-            <rect class="ov-frame" x="70" y="370" width="150" height="100" rx="6" />
-            <rect class="ov-screen" x="80" y="380" width="130" height="80" rx="3" />
+            <rect
+              class="ov-frame"
+              x="70"
+              y="370"
+              width="150"
+              height="100"
+              rx="6"
+            />
+            <rect
+              class="ov-screen"
+              x="80"
+              y="380"
+              width="130"
+              height="80"
+              rx="3"
+            />
             <rect class="ov-ui" x="92" y="390" width="106" height="12" rx="3" />
-            <rect class="ov-ui ov-ui--accent" x="92" y="410" width="106" height="18" rx="3" />
+            <rect
+              class="ov-ui ov-ui--accent"
+              x="92"
+              y="410"
+              width="106"
+              height="18"
+              rx="3"
+            />
             <rect class="ov-ui" x="92" y="434" width="106" height="18" rx="3" />
             <path class="ov-frame" d="M50 470 H240 L254 488 H36 Z" />
-            <text class="ov-title" x="145" y="536" text-anchor="middle">Student</text>
-            <text class="ov-caption" x="145" y="560" text-anchor="middle">(end user)</text>
+            <text class="ov-title" x="145" y="536" text-anchor="middle">
+              Student
+            </text>
+            <text class="ov-caption" x="145" y="560" text-anchor="middle">
+              (end user)
+            </text>
 
             <!-- User ↔ Controller -->
-            <line class="ov-arrow" x1="262" y1="410" x2="388" y2="410" marker-end="url(#ov-ah)" />
-            <text class="ov-label" x="325" y="396" text-anchor="middle">Request</text>
-            <line class="ov-arrow" x1="388" y1="452" x2="262" y2="452" marker-end="url(#ov-ah)" />
-            <text class="ov-label" x="325" y="478" text-anchor="middle">Response</text>
-            <text class="ov-caption" x="325" y="496" text-anchor="middle">updated page</text>
+            <line
+              class="ov-arrow"
+              x1="262"
+              y1="410"
+              x2="388"
+              y2="410"
+              marker-end="url(#ov-ah)"
+            />
+            <text class="ov-label" x="325" y="396" text-anchor="middle">
+              Request
+            </text>
+            <line
+              class="ov-arrow"
+              x1="388"
+              y1="452"
+              x2="262"
+              y2="452"
+              marker-end="url(#ov-ah)"
+            />
+            <text class="ov-label" x="325" y="478" text-anchor="middle">
+              Response
+            </text>
+            <text class="ov-caption" x="325" y="496" text-anchor="middle">
+              updated page
+            </text>
 
             <!-- Controller ↔ Model -->
-            <line class="ov-arrow" x1="485" y1="322" x2="349" y2="252" marker-end="url(#ov-ah)" />
+            <line
+              class="ov-arrow"
+              x1="485"
+              y1="322"
+              x2="349"
+              y2="252"
+              marker-end="url(#ov-ah)"
+            />
             <text class="ov-label" x="430" y="252">Fetch data</text>
             <text class="ov-caption" x="430" y="270">setSearchTerm()</text>
-            <line class="ov-arrow" x1="332" y1="275" x2="428" y2="325" marker-end="url(#ov-ah)" />
-            <text class="ov-caption" x="322" y="320" text-anchor="end">state.filtered</text>
+            <line
+              class="ov-arrow"
+              x1="332"
+              y1="275"
+              x2="428"
+              y2="325"
+              marker-end="url(#ov-ah)"
+            />
+            <text class="ov-caption" x="322" y="320" text-anchor="end">
+              state.filtered
+            </text>
 
             <!-- Controller ↔ View -->
-            <line class="ov-arrow" x1="615" y1="322" x2="751" y2="252" marker-end="url(#ov-ah)" />
-            <text class="ov-label" x="670" y="252" text-anchor="end">Present data</text>
-            <text class="ov-caption" x="670" y="270" text-anchor="end">render(data)</text>
-            <line class="ov-arrow" x1="768" y1="275" x2="672" y2="325" marker-end="url(#ov-ah)" />
+            <line
+              class="ov-arrow"
+              x1="615"
+              y1="322"
+              x2="751"
+              y2="252"
+              marker-end="url(#ov-ah)"
+            />
+            <text class="ov-label" x="670" y="252" text-anchor="end">
+              Present data
+            </text>
+            <text class="ov-caption" x="670" y="270" text-anchor="end">
+              render(data)
+            </text>
+            <line
+              class="ov-arrow"
+              x1="768"
+              y1="275"
+              x2="672"
+              y2="325"
+              marker-end="url(#ov-ah)"
+            />
             <text class="ov-caption" x="778" y="320">handler(value)</text>
           </svg>
         </div>
 
         <div class="ov-note">
-          <strong>Heads-up: this is the "textbook" picture.</strong> Most MVC diagrams online are
-          drawn for <em>servers</em>, where the user's request goes straight to the controller. In
-          BoardingEase everything runs in the browser, so the student's typing or click lands on a
-          <strong>View</strong> first. The view calls <code>handler(value)</code>, and that's how the
-          request reaches the controller. Steps 1–3 show that route file by file.
+          <strong>Heads-up: this is the "textbook" picture.</strong> Most MVC
+          diagrams online are drawn for <em>servers</em>, where the user's
+          request goes straight to the controller. In BoardingEase everything
+          runs in the browser, so the student's typing or click lands on a
+          <strong>View</strong> first. The view calls
+          <code>handler(value)</code>, and that's how the request reaches the
+          controller. Steps 1–3 show that route file by file.
         </div>
       </section>
 
       <!-- ============ PANEL 1: WHERE WE ARE ============ -->
-      <section class="panel" id="panel-1" role="tabpanel" aria-labelledby="tab-1" hidden>
+      <section
+        class="panel"
+        id="panel-1"
+        role="tabpanel"
+        aria-labelledby="tab-1"
+        hidden
+      >
         <div class="board">
           <div class="lane">
             <div class="lane__head">
@@ -775,10 +1210,12 @@
             </div>
             <div class="file file--misplaced">
               <div class="file__name">
-                results list + detail panel <span class="badge badge--bad">no view yet</span>
+                results list + detail panel
+                <span class="badge badge--bad">no view yet</span>
               </div>
               <p class="file__note">
-                The rest of the page has no view file yet. Its code is still inside
+                The rest of the page has no view file yet. Its code is still
+                inside
                 <code>app.js</code> →
               </p>
             </div>
@@ -787,12 +1224,18 @@
           <div class="link" aria-hidden="true">
             <div class="arrow">
               <span class="num">2</span>
-              <svg viewBox="0 0 72 16"><line x1="2" y1="8" x2="66" y2="8" /><path d="M58 2 L68 8 L58 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="2" y1="8" x2="66" y2="8" />
+                <path d="M58 2 L68 8 L58 14" />
+              </svg>
               <b>handler(term)</b>
             </div>
             <div class="arrow">
               <span class="num">4</span>
-              <svg viewBox="0 0 72 16"><line x1="6" y1="8" x2="70" y2="8" /><path d="M14 2 L4 8 L14 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="6" y1="8" x2="70" y2="8" />
+                <path d="M14 2 L4 8 L14 14" />
+              </svg>
               <b>renderCount(n)</b>
             </div>
           </div>
@@ -845,11 +1288,17 @@
           <div class="link" aria-hidden="true">
             <div class="arrow">
               <span class="num">3</span>
-              <svg viewBox="0 0 72 16"><line x1="2" y1="8" x2="66" y2="8" /><path d="M58 2 L68 8 L58 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="2" y1="8" x2="66" y2="8" />
+                <path d="M58 2 L68 8 L58 14" />
+              </svg>
               <b>setSearchTerm(term)</b>
             </div>
             <div class="arrow">
-              <svg viewBox="0 0 72 16"><line x1="6" y1="8" x2="70" y2="8" /><path d="M14 2 L4 8 L14 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="6" y1="8" x2="70" y2="8" />
+                <path d="M14 2 L4 8 L14 14" />
+              </svg>
               <b>state.filtered</b>
             </div>
           </div>
@@ -884,15 +1333,31 @@
           <h2>One search, step by step <span>· the user types "Casa"</span></h2>
           <ol class="steps">
             <li><b>User</b>Types in <code>#search-input</code>.</li>
-            <li><b>View → Controller</b><code>SearchView</code>'s input listener calls <code>searchController("Casa")</code>.</li>
-            <li><b>Controller → Model</b><code>model.setSearchTerm()</code> runs <code>applyFilters()</code> and updates <code>state.filtered</code>.</li>
-            <li class="bad"><b>Controller → View?</b><code>results()</code> builds the list HTML <em>inside app.js</em>. There is no ResultsView yet.</li>
+            <li>
+              <b>View → Controller</b><code>SearchView</code>'s input listener
+              calls <code>searchController("Casa")</code>.
+            </li>
+            <li>
+              <b>Controller → Model</b><code>model.setSearchTerm()</code> runs
+              <code>applyFilters()</code> and updates
+              <code>state.filtered</code>.
+            </li>
+            <li class="bad">
+              <b>Controller → View?</b><code>results()</code> builds the list
+              HTML <em>inside app.js</em>. There is no ResultsView yet.
+            </li>
           </ol>
         </div>
       </section>
 
       <!-- ============ PANEL 2: AFTER TODAY ============ -->
-      <section class="panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2" hidden>
+      <section
+        class="panel"
+        id="panel-2"
+        role="tabpanel"
+        aria-labelledby="tab-2"
+        hidden
+      >
         <div class="board">
           <div class="lane">
             <div class="lane__head">
@@ -900,7 +1365,9 @@
               <span class="lane__role">DOM: reads input, shows output</span>
             </div>
             <div class="file file--new">
-              <div class="file__name">views/View.js <span class="badge badge--new">new · parent</span></div>
+              <div class="file__name">
+                views/View.js <span class="badge badge--new">new · parent</span>
+              </div>
               <p class="file__note">Code that every view shares</p>
               <ul>
                 <li>_data</li>
@@ -910,12 +1377,16 @@
               </ul>
             </div>
             <div class="extends">
-              <svg viewBox="0 0 14 22"><path d="M7 20 V8 M1 9 L7 1 L13 9 Z" /></svg>
+              <svg viewBox="0 0 14 22">
+                <path d="M7 20 V8 M1 9 L7 1 L13 9 Z" />
+              </svg>
               extends
             </div>
             <div class="children">
               <div class="file file--new">
-                <div class="file__name">views/ResultsView.js <span class="badge badge--new">new</span></div>
+                <div class="file__name">
+                  views/ResultsView.js <span class="badge badge--new">new</span>
+                </div>
                 <ul>
                   <li>_parentElement</li>
                   <li>_errorMessage</li>
@@ -928,7 +1399,10 @@
               </div>
             </div>
             <div class="file">
-              <div class="file__name">views/SearchView.js <span class="badge badge--same">unchanged</span></div>
+              <div class="file__name">
+                views/SearchView.js
+                <span class="badge badge--same">unchanged</span>
+              </div>
               <ul>
                 <li>addSearchHandler()</li>
                 <li>addMaxRentHandler()</li>
@@ -941,12 +1415,18 @@
           <div class="link" aria-hidden="true">
             <div class="arrow">
               <span class="num">2</span>
-              <svg viewBox="0 0 72 16"><line x1="2" y1="8" x2="66" y2="8" /><path d="M58 2 L68 8 L58 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="2" y1="8" x2="66" y2="8" />
+                <path d="M58 2 L68 8 L58 14" />
+              </svg>
               <b>handler(id)</b>
             </div>
             <div class="arrow">
               <span class="num">4</span>
-              <svg viewBox="0 0 72 16"><line x1="6" y1="8" x2="70" y2="8" /><path d="M14 2 L4 8 L14 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="6" y1="8" x2="70" y2="8" />
+                <path d="M14 2 L4 8 L14 14" />
+              </svg>
               <b>resultsView.render(filtered)</b>
             </div>
           </div>
@@ -969,7 +1449,9 @@
                 </ul>
               </div>
               <div class="group group--next">
-                <div class="group__label">Detail panel → DetailView (next lecture)</div>
+                <div class="group__label">
+                  Detail panel → DetailView (next lecture)
+                </div>
                 <ul>
                   <li>detailMarkUpGenerator()</li>
                   <li>breakdownContent()</li>
@@ -979,7 +1461,9 @@
                 </ul>
               </div>
               <div class="group group--next">
-                <div class="group__label">State + logic → model (next lecture)</div>
+                <div class="group__label">
+                  State + logic → model (next lecture)
+                </div>
                 <ul>
                   <li>selectedId</li>
                   <li>occupants</li>
@@ -993,11 +1477,17 @@
           <div class="link" aria-hidden="true">
             <div class="arrow">
               <span class="num">3</span>
-              <svg viewBox="0 0 72 16"><line x1="2" y1="8" x2="66" y2="8" /><path d="M58 2 L68 8 L58 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="2" y1="8" x2="66" y2="8" />
+                <path d="M58 2 L68 8 L58 14" />
+              </svg>
               <b>setSearchTerm(term)</b>
             </div>
             <div class="arrow">
-              <svg viewBox="0 0 72 16"><line x1="6" y1="8" x2="70" y2="8" /><path d="M14 2 L4 8 L14 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="6" y1="8" x2="70" y2="8" />
+                <path d="M14 2 L4 8 L14 14" />
+              </svg>
               <b>state.filtered</b>
             </div>
           </div>
@@ -1029,18 +1519,41 @@
         </div>
 
         <div class="flow">
-          <h2>Clicking a card, step by step <span>· publisher–subscriber</span></h2>
+          <h2>
+            Clicking a card, step by step <span>· publisher–subscriber</span>
+          </h2>
           <ol class="steps">
-            <li><b>Setup · init()</b><code>resultsView.addSelectHandler(selectController)</code> subscribes the controller once.</li>
-            <li><b>User → View</b>A click on <code>.results__list</code> finds <code>.closest(".card")</code> and calls <code>handler(card.dataset.id)</code>.</li>
-            <li><b>Controller</b><code>selectController(id)</code> saves <code>selectedId</code> and looks up the listing.</li>
-            <li><b>Controller → View</b><code>resultsView.markSelected(id)</code> sets <code>aria-pressed</code>, and the detail panel renders.</li>
+            <li>
+              <b>Setup · init()</b
+              ><code>resultsView.addSelectHandler(selectController)</code>
+              subscribes the controller once.
+            </li>
+            <li>
+              <b>User → View</b>A click on <code>.results__list</code> finds
+              <code>.closest(".card")</code> and calls
+              <code>handler(card.dataset.id)</code>.
+            </li>
+            <li>
+              <b>Controller</b><code>selectController(id)</code> saves
+              <code>selectedId</code> and looks up the listing.
+            </li>
+            <li>
+              <b>Controller → View</b
+              ><code>resultsView.markSelected(id)</code> sets
+              <code>aria-pressed</code>, and the detail panel renders.
+            </li>
           </ol>
         </div>
       </section>
 
       <!-- ============ PANEL 3: NEXT LECTURE ============ -->
-      <section class="panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3" hidden>
+      <section
+        class="panel"
+        id="panel-3"
+        role="tabpanel"
+        aria-labelledby="tab-3"
+        hidden
+      >
         <div class="board">
           <div class="lane">
             <div class="lane__head">
@@ -1048,7 +1561,9 @@
               <span class="lane__role">DOM: reads input, shows output</span>
             </div>
             <div class="file">
-              <div class="file__name">views/View.js <span class="badge badge--same">parent</span></div>
+              <div class="file__name">
+                views/View.js <span class="badge badge--same">parent</span>
+              </div>
               <ul>
                 <li>_data</li>
                 <li>render(data)</li>
@@ -1057,7 +1572,9 @@
               </ul>
             </div>
             <div class="extends">
-              <svg viewBox="0 0 14 22"><path d="M7 20 V8 M1 9 L7 1 L13 9 Z" /></svg>
+              <svg viewBox="0 0 14 22">
+                <path d="M7 20 V8 M1 9 L7 1 L13 9 Z" />
+              </svg>
               extends
             </div>
             <div class="children">
@@ -1070,7 +1587,10 @@
                 </ul>
               </div>
               <div class="file file--next">
-                <div class="file__name">views/DetailView.js <span class="badge badge--next">next</span></div>
+                <div class="file__name">
+                  views/DetailView.js
+                  <span class="badge badge--next">next</span>
+                </div>
                 <ul>
                   <li>_generateMarkup()</li>
                   <li>updateBreakdown(data)</li>
@@ -1092,12 +1612,18 @@
           <div class="link" aria-hidden="true">
             <div class="arrow">
               <span class="num">2</span>
-              <svg viewBox="0 0 72 16"><line x1="2" y1="8" x2="66" y2="8" /><path d="M58 2 L68 8 L58 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="2" y1="8" x2="66" y2="8" />
+                <path d="M58 2 L68 8 L58 14" />
+              </svg>
               <b>handler(value)</b>
             </div>
             <div class="arrow">
               <span class="num">4</span>
-              <svg viewBox="0 0 72 16"><line x1="6" y1="8" x2="70" y2="8" /><path d="M14 2 L4 8 L14 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="6" y1="8" x2="70" y2="8" />
+                <path d="M14 2 L4 8 L14 14" />
+              </svg>
               <b>view.render(state…)</b>
             </div>
           </div>
@@ -1108,7 +1634,9 @@
               <span class="lane__role">connects view ↔ model</span>
             </div>
             <div class="file">
-              <div class="file__name">app.js <span class="badge badge--same">controllers only</span></div>
+              <div class="file__name">
+                app.js <span class="badge badge--same">controllers only</span>
+              </div>
               <div class="group group--ok">
                 <div class="group__label">Controllers ✓</div>
                 <ul>
@@ -1123,7 +1651,8 @@
               </div>
               <p class="file__note" style="margin-top: 10px">
                 No <code>querySelector</code>, no HTML strings, no
-                <code>addEventListener</code> here. Only calls to the model and the views.
+                <code>addEventListener</code> here. Only calls to the model and
+                the views.
               </p>
             </div>
           </div>
@@ -1131,11 +1660,17 @@
           <div class="link" aria-hidden="true">
             <div class="arrow">
               <span class="num">3</span>
-              <svg viewBox="0 0 72 16"><line x1="2" y1="8" x2="66" y2="8" /><path d="M58 2 L68 8 L58 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="2" y1="8" x2="66" y2="8" />
+                <path d="M58 2 L68 8 L58 14" />
+              </svg>
               <b>model.setX(value)</b>
             </div>
             <div class="arrow">
-              <svg viewBox="0 0 72 16"><line x1="6" y1="8" x2="70" y2="8" /><path d="M14 2 L4 8 L14 14" /></svg>
+              <svg viewBox="0 0 72 16">
+                <line x1="6" y1="8" x2="70" y2="8" />
+                <path d="M14 2 L4 8 L14 14" />
+              </svg>
               <b>model.state</b>
             </div>
           </div>
@@ -1182,9 +1717,18 @@
           <h2>Every interaction follows the same 4 steps</h2>
           <ol class="steps">
             <li><b>User</b>Types, clicks, or ticks something on the page.</li>
-            <li><b>View → Controller</b>The view's listener calls the controller it was given in <code>init()</code>.</li>
-            <li><b>Controller → Model</b>The controller asks the model to update <code>state</code>.</li>
-            <li><b>Controller → View</b>The controller passes the new <code>state</code> to <code>view.render()</code>.</li>
+            <li>
+              <b>View → Controller</b>The view's listener calls the controller
+              it was given in <code>init()</code>.
+            </li>
+            <li>
+              <b>Controller → Model</b>The controller asks the model to update
+              <code>state</code>.
+            </li>
+            <li>
+              <b>Controller → View</b>The controller passes the new
+              <code>state</code> to <code>view.render()</code>.
+            </li>
           </ol>
         </div>
       </section>
@@ -1193,9 +1737,18 @@
         <div class="card">
           <h2>The 3 rules</h2>
           <ul>
-            <li><strong>Model</strong> never touches the DOM (no <code>document</code>, no HTML).</li>
-            <li><strong>View</strong> never imports the model. It only gets data passed into <code>render(data)</code>.</li>
-            <li><strong>Controller</strong> (<code>app.js</code>) imports both and connects them. It's the only file that knows about everyone.</li>
+            <li>
+              <strong>Model</strong> never touches the DOM (no
+              <code>document</code>, no HTML).
+            </li>
+            <li>
+              <strong>View</strong> never imports the model. It only gets data
+              passed into <code>render(data)</code>.
+            </li>
+            <li>
+              <strong>Controller</strong> (<code>app.js</code>) imports both and
+              connects them. It's the only file that knows about everyone.
+            </li>
           </ul>
         </div>
         <div class="card">
@@ -1206,7 +1759,10 @@
             <span><span class="swatch sw-bad"></span>in the wrong layer</span>
             <span><span class="swatch sw-next"></span>next lecture</span>
           </div>
-          <p class="hint">Use <kbd>←</kbd> <kbd>→</kbd>, or <kbd>0</kbd> for the overview and <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> for the steps.</p>
+          <p class="hint">
+            Use <kbd>←</kbd> <kbd>→</kbd>, or <kbd>0</kbd> for the overview and
+            <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> for the steps.
+          </p>
         </div>
       </div>
     </div>
@@ -1230,8 +1786,11 @@
       tabs.forEach((tab, i) => tab.addEventListener("click", () => show(i)));
 
       document.addEventListener("keydown", (e) => {
-        const current = tabs.findIndex((t) => t.getAttribute("aria-selected") === "true");
-        if (e.key === "ArrowRight") show(Math.min(current + 1, tabs.length - 1));
+        const current = tabs.findIndex(
+          (t) => t.getAttribute("aria-selected") === "true",
+        );
+        if (e.key === "ArrowRight")
+          show(Math.min(current + 1, tabs.length - 1));
         if (e.key === "ArrowLeft") show(Math.max(current - 1, 0));
         if (["0", "1", "2", "3"].includes(e.key)) show(Number(e.key));
       });
@@ -1242,11 +1801,19 @@
       } catch (e) {}
 
       const root = document.documentElement;
+      try {
+        const savedTheme = localStorage.getItem("guide-theme");
+        if (savedTheme) root.dataset.theme = savedTheme;
+      } catch (e) {}
       document.querySelector("#theme-toggle").addEventListener("click", () => {
         const isDark =
           root.dataset.theme === "dark" ||
-          (!root.dataset.theme && matchMedia("(prefers-color-scheme: dark)").matches);
+          (!root.dataset.theme &&
+            matchMedia("(prefers-color-scheme: dark)").matches);
         root.dataset.theme = isDark ? "light" : "dark";
+        try {
+          localStorage.setItem("guide-theme", root.dataset.theme);
+        } catch (e) {}
       });
     </script>
   </body>

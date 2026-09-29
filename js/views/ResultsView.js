@@ -11,17 +11,14 @@ class ResultsView extends View {
       name,
       barangay,
       monthlyRent,
+      maxOccupants,
       utilitiesIncluded,
       distanceToCampusKm,
     } = listing;
 
     const utilitiesTag = utilitiesIncluded
-      ? `<span class="tag tag--utilities"
-                        >Utilities extra</span
-                      >`
-      : `<span class="tag tag--utilities"
-                        >No Utilities extra</span
-                      >`;
+      ? `<span class="tag">Utilities included</span>`
+      : `<span class="tag tag--utilities">Utilities extra</span>`;
 
     return `<li>
                 <button
@@ -41,7 +38,7 @@ class ResultsView extends View {
                   <span>
                     <span class="card__name">${name}</span>
                     <span class="card__meta"
-                      >${barangay} &middot; ${distanceToCampusKm} km from campus &middot; up to 4</span
+                      >${barangay} &middot; ${distanceToCampusKm} km from campus &middot; up to ${maxOccupants}</span
                     >
                     <span class="card__rent">&#8369;${monthlyRent} / month</span>
                     <span class="tags"
