@@ -960,7 +960,7 @@
             </ol>
           </li>
           <li><a href="#concepts">JavaScript concepts</a></li>
-          <li><a href="#lab3">Lab 3 (app.js)</a></li>
+          <li><a href="#lab3">Lab 3 + defense</a></li>
           <li><a href="#quiz">Self-check</a></li>
           <li><a href="#errors">Common errors</a></li>
           <li><a href="#source">Full source code</a></li>
@@ -997,7 +997,7 @@
           </ul>
 
           <div class="note note--blue">
-            <p><strong>Which app.js?</strong> This guide explains the <strong>week-5 version</strong> of the controller, which is now saved as <code>js/app(old).js</code>. The new <code>js/app.js</code> is the <a href="#lab3">Lab 3</a> skeleton, and <code>index.html</code> loads that one, so the page stays blank until you finish the lab. When this guide says "app.js", it means the code in <code>app(old).js</code>.</p>
+            <p><strong>Which app.js?</strong> This guide explains the <strong>week-5 version</strong> of the controller, which is now saved as <code>js/app(old).js</code>. The new <code>js/app.js</code> is the <a href="#lab3">Lab 3</a> skeleton (defense on Monday, October 5), and <code>index.html</code> loads that one, so the page stays blank until you finish the lab. When this guide says "app.js", it means the code in <code>app(old).js</code>.</p>
           </div>
 
           <h3>MVC in one paragraph</h3>
@@ -1206,7 +1206,7 @@
             </table>
           </div>
           <div class="note">
-            <p><strong>Two kinds of state.</strong> The <code>model.state</code> fields are <em>app data</em> in the Model, where they belong. <code>selectedId</code>, <code>occupants</code>, and <code>includeTransport</code> are <em>UI state</em> that still lives in <code>app.js</code>. A later lecture moves them into the model too.</p>
+            <p><strong>Two kinds of state.</strong> The <code>model.state</code> fields are <em>app data</em> in the Model, where they belong. <code>selectedId</code>, <code>occupants</code>, and <code>includeTransport</code> are <em>UI state</em> that still lives in <code>app.js</code>. Moving them into the model is the <a href="#lab3">Lab 3</a> bonus.</p>
           </div>
         </section>
 
@@ -1247,7 +1247,7 @@
               </tbody>
             </table>
           </div>
-          <p class="note note--blue">Grey "logic" and "view code" badges mark functions that live in <code>app.js</code> for now but <strong>aren't really controller code</strong>. The logic belongs in the Model, and the view code belongs in a View. Moving them is upcoming work.</p>
+          <p class="note note--blue">Grey "logic" and "view code" badges mark functions that live in <code>app.js</code> for now but <strong>aren't really controller code</strong>. The logic belongs in the Model, and the view code belongs in a View. In <a href="#lab3">Lab 3</a> the view code moves into DetailView (and the logic into the model, as a bonus).</p>
 
           <!-- model.js -->
           <div class="file-head" id="ref-model"><h3>js/model.js</h3><span class="layer layer--m">Model</span></div>
@@ -1446,7 +1446,7 @@
 
           <!-- app.js -->
           <div class="file-head" id="ref-app"><h3>js/app(old).js</h3><span class="layer layer--c">Controller</span><span class="layer layer--x">was app.js in week 5</span></div>
-          <p>The week-5 entry point: <code>index.html</code> loaded it as <code>app.js</code>, and it imports everything else. Its real controller code is at the bottom (<a href="#fn-searchController"><code>searchController</code></a>, <a href="#fn-maxRentController"><code>maxRentController</code></a>, <a href="#fn-results"><code>results</code></a>, and the startup lines). The middle still holds the <strong>detail panel</strong> and the <strong>cost calculation</strong>, which will move out in later lectures.</p>
+          <p>The week-5 entry point: <code>index.html</code> loaded it as <code>app.js</code>, and it imports everything else. Its real controller code is at the bottom (<a href="#fn-searchController"><code>searchController</code></a>, <a href="#fn-maxRentController"><code>maxRentController</code></a>, <a href="#fn-results"><code>results</code></a>, and the startup lines). The middle still holds the <strong>detail panel</strong> and the <strong>cost calculation</strong>, which Lab 3 moves into DetailView.</p>
 
           <article class="fn" id="fn-app-top">
             <div class="fn__head"><h4>Imports, elements, and UI state</h4><a class="loc" href="#src-js-app-old-js-1">app(old).js:1</a></div>
@@ -1720,22 +1720,21 @@
 
         <!-- 9 LAB 3 -->
         <section id="lab3">
-          <h2><span class="num">09</span>Lab 3: finish the refactor (<code>app.js</code>)</h2>
-          <p class="lead"><code>js/app.js</code> is now a skeleton with only the controllers. Your job: rebuild the app so that <strong>app.js has no results-list code</strong> and ResultsView owns the list. The working week-5 version is in <code>js/app(old).js</code> for reference. This guide gives hints, not answers.</p>
+          <h2><span class="num">09</span>Lab 3: finish the refactor (<code>app.js</code> + <code>DetailView.js</code>)</h2>
+          <p class="lead"><code>js/app.js</code> is now a skeleton with only the controllers. Your job: rebuild the app so that <strong>app.js is a pure controller</strong>. The results list belongs to ResultsView, and the detail panel belongs to a new <strong>DetailView</strong>. The working week-5 version is in <code>js/app(old).js</code> for reference. This guide gives hints, not answers.</p>
 
-          <div class="note note--green">
-            <p><strong>Before you start, two things are missing:</strong></p>
-            <ol>
-              <li><strong>The code the controllers need.</strong> <code>selectController</code> uses <code>selectedId</code>, <code>occupants</code>, <a href="#fn-selectedListing"><code>selectedListing()</code></a> and <a href="#fn-renderDetail"><code>renderDetail()</code></a>, which aren't in the new app.js. Bring over from <code>app(old).js</code>: the <code>detailsContainer</code> element, the three <a href="#state">UI state</a> variables, and <strong>all the detail-panel code</strong> (from <code>SCHOOL_DAYS_PER_MONTH</code> down to <code>updateBreakdown</code>, plus the detail input listener). <strong>Don't</strong> bring <code>resultsList</code>, <code>results()</code>, or the card click listener. Those are what this lab replaces.</li>
-              <li><strong>Two ResultsView methods.</strong> Add them to <code>ResultsView.js</code> yourself:
-                <ul>
-                  <li><code>addSelectHandler(handler)</code> listens for clicks on the list and calls <code>handler</code> with the clicked card's id.</li>
-                  <li><code>markSelected(id)</code> makes the card with that id show as selected. Look at <code>.card[aria-pressed="true"]</code> in <code>css/main.css</code>.</li>
-                </ul>
-              </li>
-            </ol>
+          <div class="note note--blue">
+            <p><strong>📅 Defense: Monday, October 5, 2026, in class.</strong> Be ready to run your app, walk through one click from file to file, and explain any function you wrote. See <a href="#lab3-defense">How to prepare</a> below.</p>
           </div>
 
+          <h3>Part A: the results list</h3>
+          <div class="note note--green">
+            <p><strong>Add two methods to <code>ResultsView.js</code>:</strong></p>
+            <ul>
+              <li><code>addSelectHandler(handler)</code> listens for clicks on the list and calls <code>handler</code> with the clicked card's id.</li>
+              <li><code>markSelected(id)</code> makes the card with that id show as selected. Look at <code>.card[aria-pressed="true"]</code> in <code>css/main.css</code>.</li>
+            </ul>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
@@ -1743,14 +1742,53 @@
               </thead>
               <tbody>
                 <tr><td><strong>2</strong> <a class="loc" href="#src-js-app-js-8">app.js:8</a></td><td><code>resultsController()</code>: count, render, re-mark the selected card</td><td>What did the old <a href="#fn-results"><code>results()</code></a> do? After <code>render</code> rebuilds every card with <code>aria-pressed="false"</code>, what's lost? Which state variable remembers the selected card?</td></tr>
-                <tr><td><strong>3</strong> <a class="loc" href="#src-js-app-js-13">app.js:13</a></td><td><code>selectController(id)</code>: save the id, find the listing, set occupants, mark the card, show the detail</td><td>The logic already exists in the old <a href="#fn-clickListener">click listener</a>. What changes now that the id arrives as a parameter instead of from <code>card.dataset.id</code>? Why keep the guard?</td></tr>
+                <tr><td><strong>3</strong> <a class="loc" href="#src-js-app-js-13">app.js:13</a></td><td><code>selectController(id)</code>: save the id, find the listing, set occupants, mark the card, show the detail</td><td>The logic already exists in the old <a href="#fn-clickListener">click listener</a>. What changes now that the id arrives as a parameter instead of from <code>card.dataset.id</code>? Why keep the guard? "Show the detail" now means asking <strong>DetailView</strong> to render (Part B).</td></tr>
                 <tr><td><strong>4</strong> <a class="loc" href="#src-js-app-js-19">app.js:19</a> <a class="loc" href="#src-js-app-js-24">app.js:24</a></td><td>Finish <code>searchController</code> and <code>maxRentController</code></td><td>The old versions called <code>results()</code>. That function is gone. What replaced it?</td></tr>
-                <tr><td><strong>5</strong> <a class="loc" href="#src-js-app-js-28">app.js:28</a></td><td><code>init()</code>: subscribe every handler, then do the first render</td><td>Which lines in the old app.js <a href="#fn-startup">subscribe handlers</a>? Which <a href="#fn-addSearchHandler">SearchView method</a> has the same shape as <code>addSelectHandler</code>? And who calls <code>init()</code>? (Look at the very last line of the skeleton.)</td></tr>
+                <tr><td><strong>5</strong> <a class="loc" href="#src-js-app-js-28">app.js:28</a></td><td><code>init()</code>: subscribe every handler, then do the first render</td><td>Which lines in the old app.js <a href="#fn-startup">subscribe handlers</a>? Which <a href="#fn-addSearchHandler">SearchView method</a> has the same shape as <code>addSelectHandler</code>? Don't forget DetailView's handlers from Part B. And who calls <code>init()</code>? (Look at the very last line of the skeleton.)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Part B: the detail panel → <code>DetailView.js</code></h3>
+          <p>Create <code>js/views/DetailView.js</code>: a class that <code>extends View</code>, exported as <strong>one instance</strong> (like ResultsView). Everything the old app.js did to the <code>.detail</code> panel moves in here: the old <a href="#fn-detailMarkUpGenerator"><code>detailMarkUpGenerator</code></a>, <a href="#fn-breakdownContent"><code>breakdownContent</code></a>, <a href="#fn-renderDetail"><code>renderDetail</code></a>, <a href="#fn-updateBreakdown"><code>updateBreakdown</code></a>, and the <a href="#fn-inputListener">input listener</a>.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Piece</th><th>Hints (questions to ask yourself)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>_parentElement</code>, <code>_errorMessage</code></td><td>Which element is the panel? Check <a href="#anatomy">Page anatomy</a>. What message did the old <code>renderDetail</code> show when the listing wasn't found?</td></tr>
+                <tr><td><code>renderError</code></td><td>The parent <a href="#fn-renderError"><code>View.renderError</code></a> builds an <code>&lt;li&gt;</code>. The panel is an <code>&lt;aside&gt;</code>, not a list. What can a child class do about a parent method that doesn't fit? (ResultsView doesn't need this, but DetailView does.)</td></tr>
+                <tr><td><code>_generateMarkup()</code></td><td>The panel needs the listing, the current <code>occupants</code>, <code>includeTransport</code>, <em>and</em> the cost numbers. <code>render(data)</code> takes only one argument. How can one argument carry all of that?</td></tr>
+                <tr><td>The cost math</td><td>Is <a href="#fn-calculateCostPerHead"><code>calculateCostPerHead</code></a> <em>presentation</em> or <em>logic</em>? A view only draws what it's given, so which layer should call it? It can <code>throw</code>. Who catches it, and how does the message reach the screen?</td></tr>
+                <tr><td><code>peso</code></td><td>Formatting ₱2,363 is about how the number <em>looks</em>. Which layer is that?</td></tr>
+                <tr><td><code>updateBreakdown(data)</code></td><td>Why did the old app redraw only <code>.breakdown</code> instead of the whole panel while you type? (See <a href="#quiz">Self-check #12</a>.) Keep that behaviour.</td></tr>
+                <tr><td><code>addOccupantsHandler(handler)</code>, <code>addTransportHandler(handler)</code></td><td>The inputs are re-created every time a card is clicked. Where must the listener live so it keeps working? (See the old <a href="#fn-inputListener">input listener</a>.) What value should each handler receive: a string, a number, or a boolean?</td></tr>
+                <tr><td>New controllers in app.js</td><td>Two new events need two new controllers (e.g. <code>occupantsController</code>, <code>transportController</code>). What should each update, and which DetailView method should each call afterwards?</td></tr>
               </tbody>
             </table>
           </div>
           <p class="note"><strong>The page is blank until you finish.</strong> <code>init()</code> is empty and never called, so nothing draws the cards yet. That's expected.</p>
-          <p><strong>Done when:</strong> searching and max rent still work, clicking a card highlights it and shows the detail, the highlight survives a new search, and the console is clean.</p>
+
+          <h3>Done when</h3>
+          <ul>
+            <li>Search and max rent still filter the list, and the count updates.</li>
+            <li>Clicking a card highlights it and shows the detail panel. The highlight stays after a new search.</li>
+            <li>Changing "Sharing with" and ticking the fare update the breakdown (Casa Amihan, 4 people: ₱2,363, and ₱3,023 with the fare).</li>
+            <li>Clearing "Sharing with" or typing too many people shows a message, not a red console error.</li>
+            <li><code>app.js</code> has <strong>no</strong> <code>querySelector</code>, <strong>no</strong> HTML strings, and <strong>no</strong> <code>addEventListener</code>.</li>
+            <li>The console has no errors.</li>
+          </ul>
+          <p class="note note--green"><strong>Bonus:</strong> move <code>selectedId</code>, <code>occupants</code>, <code>includeTransport</code>, and the cost math into <code>model.js</code>, with setter functions like <code>setSearchTerm</code>. That's Step 3 of the <a href="mvc-diagram.html">MVC diagram</a>.</p>
+
+          <h3 id="lab3-defense">How to prepare for the defense</h3>
+          <ol>
+            <li><strong>Run it:</strong> open it with Live Server and show every item in "Done when" working.</li>
+            <li><strong>Trace one click:</strong> from the card click to the breakdown appearing, name each file and function it passes through, and which MVC layer each one is in.</li>
+            <li><strong>Explain your code:</strong> be ready to explain any line you wrote, especially <code>addSelectHandler</code>, <code>markSelected</code>, your DetailView, and <code>init()</code>.</li>
+            <li><strong>Answer "why":</strong> why View is exported as a class but ResultsView as <code>new</code>, why the listeners use event delegation, and why the math isn't in the view.</li>
+            <li><strong>Change something live:</strong> you may be asked to make a small change on the spot (e.g. show the amenities on each card). If your code is organized well, it should touch only one file.</li>
+          </ol>
         </section>
 
         <!-- 10 QUIZ -->
