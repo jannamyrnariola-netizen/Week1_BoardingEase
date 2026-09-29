@@ -1,5 +1,6 @@
 import * as model from "./model.js";
-import searchView from "./searchView.js";
+import searchView from "./views/searchView.js";
+import resultsView from "./views/ResultsView.js";
 // ELEMENTS
 const resultsList = document.querySelector(".results__list");
 const detailsContainer = document.querySelector(".detail");
@@ -52,69 +53,9 @@ const calculateCostPerHead = (listing, people, withTransport) => {
   };
 };
 
-const markupGenerator = (listing) => {
-  // Gi destructure nato dire ang object
-  const {
-    id,
-    name,
-    barangay,
-    monthlyRent,
-    maxOccupants,
-    utilitiesIncluded,
-    estimatedUtilities,
-    distanceToCampusKm,
-    fareOneWay,
-    amenities,
-  } = listing;
-
-  const utilitiesTag = utilitiesIncluded
-    ? `<span class="tag tag--utilities"
-                      >Utilities extra</span
-                    >`
-    : `<span class="tag tag--utilities"
-                      >No Utilities extra</span
-                    >`;
-
-  return `<li>
-              <button
-                class="card"
-                type="button"
-                data-id="${id}"
-                aria-pressed="false"
-              >
-                <img
-                  class="card__image"
-                  alt=""
-                  width="96"
-                  height="96"
-                  loading="lazy"
-                  src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='96' height='96'><rect width='96' height='96' fill='%23e8f2ee'/><path d='M20 62l18-20 14 16 10-10 14 14v10H20z' fill='%231e7a5f' opacity='.45'/><circle cx='64' cy='32' r='7' fill='%231e7a5f' opacity='.45'/></svg>"
-                />
-                <span>
-                  <span class="card__name">${name}</span>
-                  <span class="card__meta"
-                    >${barangay} &middot; ${distanceToCampusKm} km from campus &middot; up to 4</span
-                  >
-                  <span class="card__rent">&#8369;${monthlyRent} / month</span>
-                  <span class="tags"
-                    >
-                    ${utilitiesTag}</span
-                  >
-                </span>
-              </button>
-            </li>`;
-};
-
 const results = () => {
   searchView.renderCount(model.state.filtered.length);
-
-  if (model.state.filtered.length === 0) {
-    resultsList.innerHTML = `<li class="empty">
-              No listings match that search. Try a barangay name.
-            </li>`;
-  }
-
-  resultsList.innerHTML = model.state.filtered.map(markupGenerator).join("");
+  resultsView.render(model.state.filtered);
 };
 
 const breakdownContent = (listing) => {
@@ -171,7 +112,7 @@ const detailMarkUpGenerator = (listing) => {
 };
 
 const selectedListing = () =>
-  listings.find((listing) => listing.id === selectedId);
+  model.state.listings.find((listing) => listing.id === selectedId);
 
 const renderDetail = () => {
   if (!selectedId) {

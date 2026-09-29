@@ -23,6 +23,8 @@ class SearchView {
   renderCount(count) {
     this._countEl.textContent = `${count} listing${count === 1 ? "" : "s"}`;
   }
+
+  
 }
 
 export default new SearchView();

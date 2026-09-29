@@ -13,7 +13,9 @@ export const applyFilters = () => {
 
   state.filtered = listings.filter((listing) => {
     const matchesQuery =
-      query === "" || listing.name.toLowerCase().includes(query);
+      query === "" ||
+      listing.name.toLowerCase().includes(query) ||
+      listing.barangay.toLowerCase().includes(query);
 
     const matchesRent =
       maxRent === "" || listing.monthlyRent <= Number(maxRent);
