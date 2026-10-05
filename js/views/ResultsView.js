@@ -4,8 +4,22 @@ class ResultsView extends View {
   _parentElement = document.querySelector(".results__list");
   _errorMessage = "No listings match that search. Try a barangay name.";
 
+  addSelectHandler(handler) {
+    this._parentElement.addEventListener("click", (e) => {
+      const card = e.target.closest(".card");
+      if (!card) return;
+
+      handler(card.dataset.id);
+    });
+  }
+
+  markSelected(id) {
+    this._parentElement.querySelectorAll(".card").forEach((card) => {
+      card.setAttribute("aria-pressed", card.dataset.id === id);
+    });
+  }
+
   _generateMarkupCard = (listing) => {
-    // Gi destructure nato dire ang object
     const {
       id,
       name,

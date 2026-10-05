@@ -1,29 +1,75 @@
 import * as model from "./model.js";
 import searchView from "./views/SearchView.js";
 import resultsView from "./views/ResultsView.js";
+import detailView from "./views/DetailView.js";
 
-// CONTROLLERS
+let selectedId = null;
+let selectedListing = null;
+
+const computeBreakdown = (listing, occupants, includeFare) => {
+  const clamped = Math.min(Math.max(occupants, 1), listing.maxOccupants);
+
+  const utilitiesTotal =
+    listing.estimatedUtilities.electricity +
+    listing.estimatedUtilities.water +
+    listing.estimatedUtilities.internet;
+
+  const rent = listing.monthlyRent / clamped;
+  const utilities = listing.utilitiesIncluded ? 0 : utilitiesTotal / clamped;
+  const transport = includeFare ? listing.fareOneWay * 2 * 22 : 0;
+  const total = rent + utilities + transport;
+
+  return { occupants: clamped, rent, utilities, transport, total };
+};
 
 const resultsController = () => {
-  // TODO 2: update the count, render the filtered listings,
-  //         then re-mark the selected card
+  searchView.renderCount(model.state.filtered.length);
+  resultsView.render(model.state.filtered);
+  if (selectedId) resultsView.markSelected(selectedId);
 };
 
 const selectController = (id) => {
-  // TODO 3: save selectedId, find the listing (guard!),
-  //         set occupants, mark the card, render the detail
+  selectedId = id;
+
+  const listing = model.state.filtered.find((l) => l.id === id);
+  if (!listing) return;
+
+  selectedListing = listing;
+  resultsView.markSelected(id);
+  detailView.render(listing);
+  detailView.renderBreakdown(computeBreakdown(listing, listing.maxOccupants, true));
 };
 
 const searchController = (term) => {
   model.setSearchTerm(term);
-  // TODO 4: call the right controller
+  resultsController();
 };
 
 const maxRentController = (value) => {
   model.setMaxRent(value);
-  // TODO 4
+  resultsController();
+};
+
+const occupantsController = (value) => {
+  if (!selectedListing) return;
+  const includeFare = detailView.getIncludeFare();
+  detailView.renderBreakdown(computeBreakdown(selectedListing, value, includeFare));
+};
+
+const fareController = (checked) => {
+  if (!selectedListing) return;
+  const occupants = detailView.getOccupants();
+  detailView.renderBreakdown(computeBreakdown(selectedListing, occupants, checked));
 };
 
 const init = () => {
-  // TODO 5: subscribe every handler, then do the first render
+  searchView.addSearchHandler(searchController);
+  searchView.addMaxRentHandler(maxRentController);
+  resultsView.addSelectHandler(selectController);
+  detailView.addOccupantsHandler(occupantsController);
+  detailView.addFareHandler(fareController);
+
+  resultsController();
 };
+
+init();
